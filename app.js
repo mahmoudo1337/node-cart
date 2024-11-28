@@ -1,4 +1,5 @@
 const path = require("path");
+const https = require("https");
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -8,16 +9,16 @@ const MongoDBStore = require("connect-mongodb-session")(session);
 const csrf = require("csurf");
 const flash = require("connect-flash");
 const multer = require("multer");
-const config = require("./config.js");
-
+const helmet = require("helmet");
+const compression = require("compression");
+const morgan = require("morgan");
+const fs = require("fs");
 const errorController = require("./controllers/error");
 const User = require("./models/user");
 
-const MONGODB_URI = config.config.MONGODB_URI;
-
 const app = express();
 const store = new MongoDBStore({
-  uri: MONGODB_URI,
+  uri: process.env.MONGODB_URI,
   collection: "sessions",
 });
 const csrfProtection = csrf();
@@ -52,6 +53,15 @@ app.set("views", "views");
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const authRoutes = require("./routes/auth");
+
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  { flags: "a" }
+);
+
+app.use(helmet());
+app.use(compression());
+app.use(morgan("combined", { stream: accessLogStream }));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
@@ -108,9 +118,9 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(MONGODB_URI)
+  .connect(process.env.MONGODB_URI)
   .then((result) => {
-    app.listen(3000);
+    app.listen(process.env.PORT || 3000);
   })
   .catch((err) => {
     console.log(err);

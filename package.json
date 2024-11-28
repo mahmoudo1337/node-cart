@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "nodemon app.js"
   },
   "author": "",
@@ -12,6 +12,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.3",
+    "compression": "^1.7.5",
     "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^5.0.0",
     "csurf": "^1.11.0",
@@ -20,8 +21,10 @@
     "express-handlebars": "3.0",
     "express-session": "^1.18.1",
     "express-validator": "^7.2.0",
+    "helmet": "^8.0.0",
     "mongodb": "^6.10.0",
     "mongoose": "^8.8.0",
+    "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.11.3",
     "nodemailer": "^6.9.16",
@@ -31,5 +34,10 @@
     "pug": "^3.0.3",
     "sequelize": "^6.37.5",
     "stripe": "^17.3.1"
-  }
+  },
+  "devDependencies": {
+    "chai": "^5.1.2",
+    "mocha": "^10.8.2"
+  },
+  "type": "commonjs"
 }

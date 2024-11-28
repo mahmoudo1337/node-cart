@@ -2,8 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const Product = require("../models/product");
 const Order = require("../models/order");
-const config = require("../config");
-const stripe = require("stripe")(config.config.STRIPE_SK);
+const stripe = require("stripe")(process.env.STRIPE_SK);
 const PDFDocument = require("pdfkit");
 const ITEMS_PER_PAGE = 2;
 

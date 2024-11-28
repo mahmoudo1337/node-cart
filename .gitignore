@@ -1,3 +1,7 @@
 node_modules
 config.js
-.vscode
+nodemon.json
+server.cert
+server.key
+access.log
+test
